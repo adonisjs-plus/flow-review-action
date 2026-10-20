@@ -1,0 +1,32 @@
+name: Flow review
+description: Review a pull request with the review lenses of Flow, on your own Claude credentials
+author: AdonisJS Plus
+
+inputs:
+  payload:
+    description: The JSON payload that the Flow App sends to the workflow. Pass `inputs.payload` as it is.
+    required: true
+  max-budget:
+    description: Stop the review when its model cost reaches this many US dollars
+    required: false
+    default: '5'
+  working-directory:
+    description: The folder of the app, where flow.lock is. Defaults to the root of the repository
+    required: false
+    default: '.'
+  server-url:
+    description: The Flow App server. Do not set this unless you know what you are doing
+    required: false
+    default: 'https://fcr.adonisjs.com'
+
+runs:
+  using: node24
+  main: build/main.js
+  # Tells the Flow App that the run is done and revokes the GitHub token, even
+  # when the review fails or the job is cancelled
+  post: build/post.js
+  post-if: always()
+
+branding:
+  icon: check-circle
+  color: purple
