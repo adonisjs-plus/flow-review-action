@@ -1,4 +1,4 @@
-import { c as setSecret, i as getInput, n as FlowServer, o as saveState, r as OIDC_AUDIENCE, s as setFailed, t as getIdToken } from "./id_token-ChiqjcsW.js";
+import { c as setSecret, i as getInput, n as FlowServer, o as saveState, r as OIDC_AUDIENCE, s as setFailed, t as getIdToken } from "./id_token-j0JDl5lW.js";
 import { tmpdir } from "node:os";
 import { execFile, spawn } from "node:child_process";
 import { join, resolve } from "node:path";
@@ -8,7 +8,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 //#endregion
 //#region src/version.ts
 /** The version of the Action. The server sends the reviewer of the same version. */
-const VERSION = "0.1.0";
+const VERSION = "0.3.0";
 //#endregion
 //#region src/reviewer.ts
 const run = promisify(execFile);

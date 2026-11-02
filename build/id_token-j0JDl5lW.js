@@ -17399,17 +17399,21 @@ var FlowServer = class {
 	* the message of the server, such as a missing licence or App install.
 	*/
 	async exchange(oidcToken, run) {
-		const body = await (await this.#post("/api/exchange", oidcToken, run)).json().catch(() => null);
-		if (!body?.token || !body.bundle?.url || !body.bundle.sha256 || !body.bundle.sdkVersion) throw new Error("The Flow App server sent an invalid response");
-		return body;
+		const exchange = (await (await this.#send("POST", "/api/exchange", oidcToken, run)).json().catch(() => null))?.data;
+		if (!exchange?.token || !exchange.bundle?.url || !exchange.bundle.sha256 || !exchange.bundle.sdkVersion) throw new Error("The Flow App server sent an invalid response");
+		return exchange;
 	}
 	/** Tells the server that the run is done, so it can start a follow-up review. */
 	async done(oidcToken, runId, outcome) {
-		await this.#post(`/api/runs/${encodeURIComponent(runId)}/done`, oidcToken, { outcome });
+		await this.#send("PATCH", `/api/runs/${encodeURIComponent(runId)}`, oidcToken, { outcome });
 	}
-	async #post(path, oidcToken, body) {
+	/**
+	* Sends a JSON request. On an error status, fails with the messages of the
+	* `errors` array that each error response of the server has.
+	*/
+	async #send(method, path, oidcToken, body) {
 		const response = await this.fetchFn(new URL(path, this.url), {
-			method: "POST",
+			method,
 			headers: {
 				"authorization": `Bearer ${oidcToken}`,
 				"content-type": "application/json"
@@ -17419,7 +17423,8 @@ var FlowServer = class {
 		});
 		if (!response.ok) {
 			const error = await response.json().catch(() => null);
-			throw new Error(typeof error?.error === "string" ? error.error : `The Flow App server answered ${response.status} on ${path}`);
+			const messages = Array.isArray(error?.errors) ? error.errors.map((item) => item?.message).filter((message) => typeof message === "string" && !!message) : [];
+			throw new Error(messages.length ? messages.join("; ") : `The Flow App server answered ${response.status} on ${path}`);
 		}
 		return response;
 	}
