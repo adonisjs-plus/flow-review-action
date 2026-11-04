@@ -8,7 +8,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 //#endregion
 //#region src/version.ts
 /** The version of the Action. The server sends the reviewer of the same version. */
-const VERSION = "0.4.1";
+const VERSION = "0.4.2";
 //#endregion
 //#region src/reviewer.ts
 const run = promisify(execFile);
