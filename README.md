@@ -37,12 +37,28 @@ jobs:
 
       - run: npx flow install --ci
 
-      - uses: adonisjs-plus/flow-review-action@v0
+      - uses: adonisjs-plus/flow-review-action@v0.4.1
         with:
           payload: ${{ inputs.payload }}
         env:
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           # or ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+```
+
+## Versions
+
+Each release of the Action has its own tag, such as `v0.4.1`, and a tag never moves. Use the tag of a release, as the workflow above does. To get a new reviewer, change the tag. The [tags](https://github.com/adonisjs-plus/flow-review-action/tags) list each release.
+
+Dependabot can open the pull request that changes the tag when a new release comes out:
+
+```yaml
+# .github/dependabot.yml
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
 ```
 
 ## Inputs
