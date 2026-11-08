@@ -17400,7 +17400,7 @@ var FlowServer = class {
 	*/
 	async exchange(oidcToken, run) {
 		const exchange = (await (await this.#send("POST", "/api/exchange", oidcToken, run)).json().catch(() => null))?.data;
-		if (!exchange?.token || !exchange.bundle?.url || !exchange.bundle.sha256 || !exchange.bundle.sdkVersion) throw new Error("The Flow App server sent an invalid response");
+		if (!exchange?.token || !exchange.bundle?.url || !exchange.bundle.sha256) throw new Error("The Flow App server sent an invalid response");
 		return exchange;
 	}
 	/** Tells the server that the run is done, so it can start a follow-up review. */
