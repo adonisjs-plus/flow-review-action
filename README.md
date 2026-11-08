@@ -37,7 +37,7 @@ jobs:
 
       - run: npx flow install --ci
 
-      - uses: adonisjs-plus/flow-review-action@v0.4.3
+      - uses: adonisjs-plus/flow-review-action@v0.5.0
         with:
           payload: ${{ inputs.payload }}
         env:
@@ -47,7 +47,7 @@ jobs:
 
 ## Versions
 
-Each release of the Action has its own tag, such as `v0.4.3`, and a tag never moves. Use the tag of a release, as the workflow above does. To get a new reviewer, change the tag. The [tags](https://github.com/adonisjs-plus/flow-review-action/tags) list each release.
+Each release of the Action has its own tag, such as `v0.5.0`, and a tag never moves. Use the tag of a release, as the workflow above does. To get a new reviewer, change the tag. The [tags](https://github.com/adonisjs-plus/flow-review-action/tags) list each release.
 
 Dependabot can open the pull request that changes the tag when a new release comes out:
 
