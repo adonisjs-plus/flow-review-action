@@ -10,7 +10,7 @@ import { setTimeout } from "node:timers/promises";
 //#endregion
 //#region src/version.ts
 /** The version of the Action. The server sends the reviewer of the same version. */
-const VERSION = "0.5.0";
+const VERSION = "0.6.0";
 //#endregion
 //#region src/reviewer.ts
 /** The file name of the reviewer in its folder. */
